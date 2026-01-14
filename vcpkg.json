@@ -3,18 +3,11 @@
   "name": "deneme",
   "version-string": "0.1",
   "dependencies": [
-    "fast-cpp-csv-parser",
-    "rsm-binary-io",
-    "simpleini",
+    "clib-util",
+    "rapidcsv",
+    "directxtk",
     "spdlog",
     "xbyak",
-    "rapidcsv",
-    "directxmath",
-    "directxtk",
-    "directxtex",
-    "boost-stl-interfaces",
-    "nlohmann-json",
-    "clib-util",
     "detours"
   ],
   "overrides": [

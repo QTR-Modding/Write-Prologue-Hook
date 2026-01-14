@@ -109,7 +109,6 @@ endforeach()
 list(REMOVE_DUPLICATES header_dirs)
 
 
-find_package(directxtex CONFIG REQUIRED)
 add_subdirectory("extern/zydis")
 find_path(DETOURS_INCLUDE_DIRS "detours/detours.h")
 find_library(DETOURS_LIBRARY detours REQUIRED)
@@ -125,7 +124,7 @@ target_include_directories(
     ${DETOURS_INCLUDE_DIRS}
 )
 
-target_link_libraries(${PROJECT_NAME} PRIVATE Microsoft::DirectXTex "Zydis" ${DETOURS_LIBRARY})
+target_link_libraries(${PROJECT_NAME} PRIVATE "Zydis" ${DETOURS_LIBRARY})
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE MOD_NAME="${BEAUTIFUL_NAME}")
 
