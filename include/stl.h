@@ -93,6 +93,7 @@ namespace stl {
         DetourTransactionCommit();
         return a_src;
     }
+
     template <class Func>
     auto write_prologue_hook(uintptr_t a_src, Func a_dest) {
         auto& trampoline = SKSE::GetTrampoline();
