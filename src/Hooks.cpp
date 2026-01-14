@@ -1,7 +1,7 @@
 #include "Hooks.h"
 #include "stl.h"
 #define HOOK1 stl::ms_write_prologue_hook
-#define HOOK2 stl::ms_write_prologue_hook
+#define HOOK2 stl::write_prologue_hook
 #define HOOK3 stl::ms_write_prologue_hook
 struct Hook1 {
     static void thunk(uint32_t a1, uint64_t a2, uint64_t a3) { 
@@ -40,11 +40,13 @@ struct Hook3 {
 
 void Hooks::Install() {
     SKSE::AllocTrampoline(512);
-    stl::log_assembly(REL::ID(107329).address(), 13, "original");
+    auto address = REL::ID(107329).address();
+    auto size = stl::get_function_size(address);
+    stl::log_assembly(address, size, "original");
     Hook1::install();
-    stl::log_assembly(REL::ID(107329).address(), 13, "after hook");
+    stl::log_assembly(REL::ID(107329).address(), size, "after hook");
     Hook2::install();
-    stl::log_assembly(REL::ID(107329).address(), 13, "after hook 2");
+    stl::log_assembly(REL::ID(107329).address(), size, "after hook 2");
     Hook3::install();
-    stl::log_assembly(REL::ID(107329).address(), 13, "after hook 3");
+    stl::log_assembly(REL::ID(107329).address(), size, "after hook 3");
 }

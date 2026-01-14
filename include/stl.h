@@ -6,6 +6,25 @@
 namespace stl {
     enum class InstructionType { None, Call, Jump };
 
+    inline size_t get_function_size(uintptr_t addr, size_t max_bytes = 1024) {
+        ZydisDecoder decoder;
+        ZydisDecodedInstruction instr;
+        ZydisDecoderInit(&decoder, ZYDIS_MACHINE_MODE_LONG_64, ZYDIS_STACK_WIDTH_64);
+
+        size_t offset = 0;
+        const uint8_t* code = reinterpret_cast<const uint8_t*>(addr);
+
+        while (offset < max_bytes) {
+            if (ZydisDecoderDecodeInstruction(&decoder, nullptr, code + offset, max_bytes - offset, &instr) != ZYAN_STATUS_SUCCESS) break;
+
+            offset += instr.length;
+
+            if (instr.mnemonic == ZYDIS_MNEMONIC_RET || instr.mnemonic == ZYDIS_MNEMONIC_JMP) break;
+        }
+
+        return offset;
+    }
+
     void log_assembly(uintptr_t runtime_address, size_t length, std::string title) {
         logger::info("{}", title);
         ZyanUSize offset = 0;
