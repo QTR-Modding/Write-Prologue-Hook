@@ -108,6 +108,12 @@ endforeach()
 
 list(REMOVE_DUPLICATES header_dirs)
 
+
+find_package(directxtex CONFIG REQUIRED)
+add_subdirectory("extern/zydis")
+find_path(DETOURS_INCLUDE_DIRS "detours/detours.h")
+find_library(DETOURS_LIBRARY detours REQUIRED)
+
 target_include_directories(
 	${PROJECT_NAME}
 	PRIVATE
@@ -116,10 +122,10 @@ target_include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/include
     ${CMAKE_CURRENT_SOURCE_DIR}/imgui
     ${CMAKE_CURRENT_SOURCE_DIR}/imgui/backends
+    ${DETOURS_INCLUDE_DIRS}
 )
-find_package(directxtex CONFIG REQUIRED)
-add_subdirectory("extern/zydis")
-target_link_libraries(${PROJECT_NAME} PRIVATE Microsoft::DirectXTex "Zydis")
+
+target_link_libraries(${PROJECT_NAME} PRIVATE Microsoft::DirectXTex "Zydis" ${DETOURS_LIBRARY})
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE MOD_NAME="${BEAUTIFUL_NAME}")
 

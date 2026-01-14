@@ -1,6 +1,7 @@
 #define ZYDIS_STATIC_DEFINE
 #include "Zydis/Zydis.h"
 #include "xbyak/xbyak.h"
+#include <detours/detours.h>
 
 namespace stl {
     enum class InstructionType { None, Call, Jump };
@@ -65,6 +66,14 @@ namespace stl {
         return info;
     }
 
+    template <class Func>
+    uintptr_t ms_write_prologue_hook(uintptr_t a_src, Func* a_dest) {
+        DetourTransactionBegin();
+        DetourUpdateThread(GetCurrentThread());
+        DetourAttach(&(PVOID&)a_src, a_dest);
+        DetourTransactionCommit();
+        return a_src;
+    }
     template <class Func>
     auto write_prologue_hook(uintptr_t a_src, Func a_dest) {
         auto& trampoline = SKSE::GetTrampoline();

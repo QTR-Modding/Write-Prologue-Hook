@@ -14,7 +14,8 @@
     "directxtex",
     "boost-stl-interfaces",
     "nlohmann-json",
-    "clib-util"
+    "clib-util",
+    "detours"
   ],
   "overrides": [
     {
