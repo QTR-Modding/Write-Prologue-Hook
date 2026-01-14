@@ -23,9 +23,9 @@ add_include_folder(vendor/include)
 
 
 cmake_minimum_required(VERSION 3.21)
-set(AUTHOR_NAME "AuthorName")
-set(PRODUCT_NAME "SKSEMenuFrameworkTemplate")
-set(BEAUTIFUL_NAME "SKSE Menu Framework Template")
+set(AUTHOR_NAME "SkyrimThiago")
+set(PRODUCT_NAME "WritePrologueHook")
+set(BEAUTIFUL_NAME "Write Prologue Hook")
 
 project(${PRODUCT_NAME} VERSION 3.0.0.0 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 23)
@@ -66,7 +66,6 @@ set(BUILD_TESTS OFF CACHE BOOL " " FORCE)
 
 add_subdirectory("$ENV{COMMONLIB_SSE_FOLDER}" ${CMAKE_CURRENT_BINARY_DIR}/_deps/clib-build)
 get_target_property(COMMONLIB_SRC_DIR CommonLibSSE SOURCE_DIR)
-
 find_path(CLIB_UTIL_INCLUDE_DIRS "ClibUtil/utils.hpp")
 file(
   GLOB_RECURSE
@@ -118,8 +117,11 @@ target_include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/imgui
     ${CMAKE_CURRENT_SOURCE_DIR}/imgui/backends
 )
+find_package(directxtex CONFIG REQUIRED)
+add_subdirectory("extern/zydis")
+target_link_libraries(${PROJECT_NAME} PRIVATE Microsoft::DirectXTex "Zydis")
 
-target_compile_definitions(${PRODUCT_NAME} PRIVATE MOD_NAME="${BEAUTIFUL_NAME}")
+target_compile_definitions(${PROJECT_NAME} PRIVATE MOD_NAME="${BEAUTIFUL_NAME}")
 
 
 # ---------------------------------------------------- #

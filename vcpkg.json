@@ -11,13 +11,19 @@
     "rapidcsv",
     "directxmath",
     "directxtk",
+    "directxtex",
     "boost-stl-interfaces",
+    "nlohmann-json",
     "clib-util"
   ],
   "overrides": [
     {
       "name": "fmt",
       "version": "9.1.0"
+    },
+    {
+      "name": "xbyak",
+      "version": "7.23.1"
     }
   ],
   "builtin-baseline": "78b61582c9e093fda56a01ebb654be15a0033897"
